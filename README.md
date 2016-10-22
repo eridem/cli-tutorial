@@ -308,7 +308,7 @@ For example, the ```handler``` function of our ```lib/commands/create.js``` comm
 ```javascript
   cmd.handler = function (argv) {
     const { moduleName } = argv
-    const { join, shell, process, __dirname } = dep
+    const { join, shell, process } = dep
     const folderSrc = join(__dirname, '../scaffolding/create')
     const folderDst = join(process.cwd(), moduleName)
     shell.cp('-Rf', folderSrc, folderDst)
@@ -329,7 +329,7 @@ const yargs = require('yargs')
 const colors = require('chalk')
 
 // External dependencies to pass to the commands
-let dep = { join, resolve, console, shell, colors, process, __dirname }
+let dep = { join, resolve, console, shell, colors, process }
 
 // Load commands from folder and pass dependencies
 const commandsFn = requireDir(join(__dirname, 'lib', 'commands'))
@@ -476,9 +476,8 @@ The simplest way is export the packages from our ```index.js``` and create anoth
 
 We can explit the initialization of our modules from the commands:
 
-```index.js```
-
 ```javascript
+// index.js
 'use strict'
 
 const { join, resolve } = require('path')
@@ -488,7 +487,7 @@ const colors = require('chalk')
 const shell = require('shelljs')
 
 // External dependencies to pass to the commands
-let dep = { join, resolve, console, colors, shell, process, __dirname}
+let dep = { join, resolve, console, colors, shell, process }
 
 // Internal dependencies
 const inDepFns = requireDir(join(__dirname, 'lib', 'modules'))
