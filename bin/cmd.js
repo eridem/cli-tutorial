@@ -8,7 +8,7 @@ const { commands } = require('../index.js')
 
 // Switch CWD if specified from options
 const cwd = resolve(yargs.argv.cwd || process.cwd())
-process.chdir(cwd);
+process.chdir(cwd)
 
 // Init CLI commands and options
 commands.forEach(cmd => yargs.command(cmd.command, cmd.desc, cmd.builder, cmd.handler))

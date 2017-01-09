@@ -12,7 +12,8 @@ let dep = { join, resolve, console, colors, shell, process }
 // Internal dependencies
 const inDepFns = requireDir(join(__dirname, 'lib', 'modules'))
 Object.keys(inDepFns).forEach(name => {
-  dep[camelCase(name)] = inDepFns[name](dep)})
+  dep[camelCase(name)] = inDepFns[name](dep)
+})
 
 // Load commands from folder and pass dependencies
 const commandsFn = requireDir(join(__dirname, 'lib', 'commands'))

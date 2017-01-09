@@ -5,6 +5,7 @@
   "homepage": "http://eridem.net",
   "main": "index.js",
   "scripts": {
+    "standard": "standard",
     "pretest": "standard --fix",
     "test": "nyc --cache mocha --timeout=8000 --check-leaks test/**/*.js"
   },
@@ -22,6 +23,9 @@
     "yargs": "^5.0.0"
   },
   "devDependencies": {
-    "chai": "^3.5.0"
+    "chai": "^3.5.0",
+    "mocha": "^3.2.0",
+    "nyc": "^10.0.0",
+    "standard": "^8.6.0"
   }
 }
