@@ -20,5 +20,4 @@ const commandsFn = requireDir(join(__dirname, 'lib', 'commands'))
 const commands = Object.keys(commandsFn).map((i) => commandsFn[i](dep))
 
 // Export commands and modules separatelly
-const modules = commands.reduce((pre, cur) => { pre[cur.name] = cur.value; return pre }, {})
-module.exports = { commands, modules }
+module.exports = { commands, modules: dep }

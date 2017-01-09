@@ -11,6 +11,7 @@
 - [Injecting dependencies](#Injecting-dependencies)
 - [Creating tests](#Creating-tests)
 - [Split modules and CLI](#Split-modules-and-cli)
+- [Pipes](#Pipes)
 
 ## Before start
 
@@ -408,10 +409,10 @@ lib/modules/bar-module.js    =    barModule
 
 After the chapter [Injecting dependencies](#Injecting-dependencies), we should have everything ready to test our apps. All references are passed to each module, which gives us the advantage to mock them.
 
-We will use ```mocha``` and ```nyc``` for testing and coverage. We will need to install them globally:
+We will use ```mocha``` and ```nyc``` for testing and coverage. We will need to install them as development dependencies:
 
 ```bash
-$ npm install --global mocha nyc
+$ npm install --save-dev mocha nyc
 ```
 
 And we will modify our ```package.json``` to run the tests:
@@ -492,15 +493,15 @@ let dep = { join, resolve, console, colors, shell, process }
 // Internal dependencies
 const inDepFns = requireDir(join(__dirname, 'lib', 'modules'))
 Object.keys(inDepFns).forEach(name => {
-  dep[camelCase(name)] = inDepFns[name](dep)})
+  dep[camelCase(name)] = inDepFns[name](dep)
+})
 
 // Load commands from folder and pass dependencies
 const commandsFn = requireDir(join(__dirname, 'lib', 'commands'))
 const commands = Object.keys(commandsFn).map((i) => commandsFn[i](dep))
 
 // Export commands and modules separatelly
-const modules = commands.reduce((pre, cur) => { pre[cur.name] = cur.value; return pre }, {})
-module.exports = { commands, modules }
+module.exports = { commands, modules: dep }
 ```
 
 As we can see, we will export ```{ commands, modules }```. The CLI tool may take ```commands``` already recreated and any other package could get our internal modules from ```modules```.
@@ -529,6 +530,12 @@ yargs
   .epilog((homepage ? `| Documentation: ${homepage}\n` : '') + (version ? `| Version: ${version}` : ''))
   .argv
 ```
+
+# Pipes
+
+It is possible to do few modifications in the project to pass the command line options as output from other commands (aka pipes). This modification is not included in the `master` branch of the project, but you can revise the following branch with this feature enabled:
+
+<https://github.com/eridem/cli-tutorial/tree/feature/pipes>
 
 # Get the code
 
